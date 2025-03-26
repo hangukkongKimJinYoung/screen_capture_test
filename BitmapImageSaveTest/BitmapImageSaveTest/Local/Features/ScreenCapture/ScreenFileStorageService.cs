@@ -11,22 +11,19 @@ namespace BitmapImageSaveTest.Local.Features.ScreenCapture
 {
     public class ScreenFileStorageService : ScreenStorageService
     {
-        private string _baseStorageFolderPath;
         private uint _saveId = 0;
 
 
-        public ScreenFileStorageService()
+        public ScreenFileStorageService(string storagePath) : base(storagePath)
         {
             Initialize();
         }
 
         private void Initialize()
         {
-            _baseStorageFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Capture");
-
-            if (!Directory.Exists(_baseStorageFolderPath))
+            if (!Directory.Exists(_storagePath))
             {
-                Directory.CreateDirectory(_baseStorageFolderPath);
+                Directory.CreateDirectory(_storagePath);
             }
         }
 
@@ -54,7 +51,7 @@ namespace BitmapImageSaveTest.Local.Features.ScreenCapture
 
         private string CalculateStoragePath()
         {
-            return Path.Combine(_baseStorageFolderPath, $"{_saveId++}.png");
+            return Path.Combine(_storagePath, $"{_saveId++}.png");
         }
     }
 }

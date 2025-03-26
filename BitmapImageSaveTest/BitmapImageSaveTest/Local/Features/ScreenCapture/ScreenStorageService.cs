@@ -11,6 +11,13 @@ namespace BitmapImageSaveTest.Local.Features.ScreenCapture
 {
     public abstract class ScreenStorageService
     {
+        protected string _storagePath;
+
+        protected ScreenStorageService(string storagePath)
+        {
+            _storagePath = storagePath;
+        }
+
         public void SaveScreenshot(BitmapSource screenshot)
         {
             SaveToStorage(EncodeScreen(screenshot));
