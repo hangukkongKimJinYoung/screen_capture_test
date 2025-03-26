@@ -13,16 +13,25 @@ namespace BitmapImageSaveTest.Local.Features.ScreenCapture
 {
     public class ScreenDbStorageService : ScreenStorageService
     {
-        string _applicationName;
+        private int _shipCode;
+        private int _sensorCode;
 
 
         private MysqlDataService _mysqlService;
         private MysqlQueryHelper _mysqlQueryHelper;
 
 
-        public ScreenDbStorageService(string applicationName, IPEndPoint remoteEP, string storagePath, string user, string password) : base(storagePath)
+        public ScreenDbStorageService(
+            IPEndPoint remoteEP,
+            string storagePath,
+            string user,
+            string password,
+            int shipCode,
+            int sensorCode) : base(storagePath)
         {
-            _applicationName = applicationName;
+            _shipCode = shipCode;
+            _sensorCode = sensorCode;
+
             _mysqlService = new MysqlDataService("komsa", remoteEP, storagePath, user, password);
             _mysqlQueryHelper = new MysqlQueryHelper();
         }
@@ -47,7 +56,11 @@ namespace BitmapImageSaveTest.Local.Features.ScreenCapture
 
         private void InsertImageBinary(byte[] bytes)
         {
-            _mysqlService.ExecuteQuery(_mysqlQueryHelper.MakeImageDataInsertCommand(_applicationName, bytes));
+            _mysqlService.ExecuteQuery(_mysqlQueryHelper.MakeImageDataInsertCommand(
+                _shipCode,
+                _sensorCode,
+                1,
+                bytes));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BitmapImageSaveTest.Repositories;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,14 +32,15 @@ namespace BitmapImageSaveTest.Local.Features.ScreenCapture
 
         private void Initialize()
         {
-            // 여기서 StorageService를 DB로 할 것이다. 테스트 할 때는 다시 File로 하고
+            // Debug/Capture/ 에서 이미지 저장하는 것을 확인하려면 주석 제거
             //ScreenStorageService storageService = new ScreenFileStorageService(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Capture"));
             ScreenStorageService storageService = new ScreenDbStorageService(
-                "TEST",
                 new System.Net.IPEndPoint(IPAddress.Parse("127.0.0.1"), 3306),
                 "komeri_ship",
                 "root",
-                "1234");
+                "1234",
+                1,
+                (int)EApplicationCode.Ar);
             
             _screenPhotoGrapher = new ScreenPhotoGrapher(storageService);
 
@@ -49,9 +51,9 @@ namespace BitmapImageSaveTest.Local.Features.ScreenCapture
         {
             _subject = subject;
 
-            //_captureScreenTimer.Change(0, _captureScreenPeriod_ms);
+            _captureScreenTimer.Change(0, _captureScreenPeriod_ms);
             //_captureScreenTimer.Change(0, 1000*5);
-            Task.Run(() => { _screenPhotoGrapher.CaptureScreen(subject); });
+            //Task.Run(() => { _screenPhotoGrapher.CaptureScreen(subject); });
         }
 
         public void StopCaptureScreen()

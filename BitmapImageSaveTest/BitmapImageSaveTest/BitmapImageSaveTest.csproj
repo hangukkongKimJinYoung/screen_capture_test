@@ -122,6 +122,7 @@
     <Compile Include="Local\Features\ScreenCapture\ScreenPhotoGrapher.cs" />
     <Compile Include="Local\Features\ScreenCapture\ScreenFileStorageService.cs" />
     <Compile Include="Local\ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="Repositories\EApplicationCode.cs" />
     <Compile Include="Repositories\MysqlQueryHelper.cs" />
     <Compile Include="Services\MysqlDataService.cs" />
     <Compile Include="UI\Views\ColorSpreadView.xaml.cs">
